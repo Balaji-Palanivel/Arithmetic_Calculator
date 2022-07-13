@@ -1,3 +1,5 @@
+
+var Hist = [];
  var calculation = function(operationName, valueOfX, valueOfY) {
       if(operationName == 'add')
         return valueOfX + valueOfY;
@@ -11,30 +13,69 @@
     var operation = function(operationName){
       x = document.getElementById("valueOfX").value
       y = document.getElementById("valueOfY").value
+      
       if((x*1 == x) && (y*1 == y))
       {  
          output = calculation(operationName, parseInt(x), parseInt(y));
          document.getElementById("resultHere").innerHTML = output; 
-<<<<<<< HEAD
-=======
-         store(operationName,x,y);
->>>>>>> 17c681131582a8c6aefcbab23eda9559a3351776
+         retrieveRecords(operationName,x,y,output);         
       }
       else
       {
         document.getElementById("resultHere").innerHTML = "Given Input is not a number";
       }
       };
-<<<<<<< HEAD
-=======
-//-------------------------------------------------------------------------------------------
- function store(Operation,x,y){ //stores items in the localStorage
-    var key = Operation //gets the key from the user
-    const cal = {
-        Number1: x,
-        Number2: y,
-    }
-    window.localStorage.setItem(key,JSON.stringify(cal));  
-    //converting object to string
-}
->>>>>>> 17c681131582a8c6aefcbab23eda9559a3351776
+//------------------------------------------------------------------------------------------------------------------
+
+ 
+function retrieveRecords(key,x,y,output)
+   { 
+    string=""
+    if (key=='add'){
+    	string += +x+ " + " +y+ " = " +output+ "";}
+    else if (key=='sub'){
+    	string += +x+ " - " +y+ " = " +output+ "";}
+    else if (key=='mul'){
+    	string += +x+ " * " +y+ " = " +output+ "";}
+    else{
+    	string += +x+ " / " +y+ " = " +output+ "";}
+    Hist.push(string);
+   if (window.localStorage.getItem("cal") == null)
+       {
+         window.localStorage.setItem("cal",JSON.stringify(Hist));
+       }
+   else{
+         window.localStorage.setItem("cal",JSON.stringify(Hist));
+       }
+   
+         window.movies2 = JSON.parse(window.localStorage.getItem("cal")); 
+  }
+//------------------------------------------------------------------------------------------------------------------ 
+   
+   function myFunction() {
+   
+   document.getElementById("history").innerHTML =`<div style="background-color:black;color:white;padding:20px;">
+     <h2>History</h2>
+     <ul id="myList" >
+     <li style="list-style-type:none;"></li>
+     </ul>            
+     </div>`
+     if (Hist.length != 0){
+     for (var i = 0; i < window.movies2.length; i++) 
+        {
+    	const node = document.createElement("li");
+        const textnode = document.createTextNode(window.movies2[i]);
+        node.appendChild(textnode);
+        document.getElementById("myList").appendChild(node); 	     
+    	}
+	}
+     }
+   
+   function del()
+   {
+      var arr2 = Hist; 
+      Hist = [];
+   }  
+    
+
+
