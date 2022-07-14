@@ -1,4 +1,4 @@
-
+var dummy=0
 var Hist = [];
  var calculation = function(operationName, valueOfX, valueOfY) {
       if(operationName == 'add')
@@ -40,12 +40,18 @@ function retrieveRecords(key,x,y,output)
     else{
     	string += +x+ " / " +y+ " = " +output+ "";}
     Hist.push(string);
-   if (window.localStorage.getItem("cal") == null)
+   if (window.localStorage.getItem("cal") === null)
        {
          window.localStorage.setItem("cal",JSON.stringify(Hist));
        }
    else{
-         window.localStorage.setItem("cal",JSON.stringify(Hist));
+         var item = JSON.parse(window.localStorage.getItem("cal")); 
+         for (var i = 0; i < item.length; i++) 
+        { 
+          Hist.push(item[i]);
+        }
+         let NewHist = [...new Set(Hist)];
+         window.localStorage.setItem("cal",JSON.stringify(NewHist));
        }
    
          window.movies2 = JSON.parse(window.localStorage.getItem("cal")); 
@@ -60,7 +66,7 @@ function retrieveRecords(key,x,y,output)
      <li style="list-style-type:none;"></li>
      </ul>            
      </div>`
-     if (Hist.length != 0){
+     if (dummy != 1){
      for (var i = 0; i < window.movies2.length; i++) 
         {
     	const node = document.createElement("li");
@@ -73,9 +79,9 @@ function retrieveRecords(key,x,y,output)
    
    function del()
    {
-      var arr2 = Hist; 
-      Hist = [];
+      var arr = movies2;
+      window.movies2 = []; 
    }  
     
 
-
+window.localStorage.clear();
